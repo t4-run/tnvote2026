@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TN Vote 2026 — Tamil Nadu Election Tracker</title>
+  <meta name="description" content="The definitive Tamil Nadu Assembly Election 2026 tracker. Live polls, seat projections, zone breakdowns, news and results — all in one place." />
+  <meta property="og:title" content="TN Vote 2026 — Tamil Nadu Election Tracker" />
+  <meta property="og:description" content="Live polls, seat projections & news for Tamil Nadu Assembly Election 2026. Polling: April 23 · Results: May 4" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --saffron: #E8650A;
+      --saffron-light: #FF8C35;
+      --green: #138808;
+      --navy: #0D1F33;
+      --navy-mid: #162B44;
+      --cream: #FAF6F0;
+      --warm-white: #FFFCF8;
+      --card: #FFFFFF;
+      --border: #E4DDD4;
+      --border-strong: #C8BFB4;
+      --muted: #7A6E65;
+      --muted-light: #A89E94;
+      --text: #1C1208;
+      --dmk: #1A3D6B;
+      --dmk-light: #E8F0FA;
+      --aiadmk: #B01020;
+      --aiadmk-light: #FDE8EA;
+      --tvk: #D4600A;
+      --tvk-light: #FEF0E6;
+      --ntk: #2D7A3A;
+      --ntk-light: #E6F4E8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .flag-bar {
+      display: flex;
+      height: 3px;
+    }
+    .flag-bar span { flex: 1; }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: var(--saffron);
+      letter-spacing: -0.02em;
+    }
+    .logo-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .header-nav {
+      display: flex;
+      gap: 4px;
+    }
+    .nav-link {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      font-weight: 400;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .nav-link.active { color: #fff; }
+    .live-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(200,0,26,0.25);
+      border: 1px solid rgba(200,0,26,0.4);
+      color: #FF6B7A;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .live-dot {
+      width: 5px; height: 5px;
+      background: #FF6B7A;
+      border-radius: 50%;
+      animation: blink 1.4s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--navy);
+      padding: 4rem 1.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-bg-circle.c1 {
+      width: 500px; height: 500px;
+      top: -180px; right: -120px;
+      background: radial-gradient(circle, rgba(232,101,10,0.12) 0%, transparent 70%);
+    }
+    .hero-bg-circle.c2 {
+      width: 360px; height: 360px;
+      bottom: -140px; left: -80px;
+      background: radial-gradient(circle, rgba(19,136,8,0.10) 0%, transparent 70%);
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--saffron);
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--saffron);
+      opacity: 0.4;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-title .tamil {
+      color: var(--saffron);
+      font-style: italic;
+    }
+    .hero-desc {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: rgba(255,255,255,0.5);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .hero-countdown {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .cd-unit {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 18px;
+      text-align: center;
+      min-width: 70px;
+    }
+    .cd-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--saffron);
+      line-height: 1;
+    }
+    .cd-lbl {
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 3px;
+    }
+    .cd-sep {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.2);
+      align-self: center;
+      margin-top: -8px;
+    }
+    .hero-dates {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .date-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+    }
+    .date-badge strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+    .date-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      background: var(--navy-mid);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item {
+      padding: 1.75rem 1rem;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      text-align: center;
+      position: relative;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-n {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .stat-n span {
+      font-size: 1.4rem;
+      font-weight: 300;
+      opacity: 0.7;
+    }
+    .stat-accent {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--saffron);
+      margin: 8px auto 6px;
+      border-radius: 1px;
+    }
+    .stat-l {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 500;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── POLL CARDS ── */
+    .poll-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .poll-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .poll-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+    }
+    .poll-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .poll-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .poll-tag {
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .tag-strong { background: #DCF0DC; color: #1A5E1A; }
+    .tag-close { background: #FDE8EA; color: #8B1020; }
+    .tag-mid { background: #FEF0E6; color: #8B3A0A; }
+
+    .party-row {
+      margin: 10px 0;
+    }
+    .pr-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .pr-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .party-dot {
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .party-name { font-size: 13px; font-weight: 500; color: var(--text); }
+    .party-extra { font-size: 11px; color: var(--muted); margin-left: 4px; font-weight: 400; }
+    .pr-right { display: flex; align-items: baseline; gap: 6px; }
+    .seat-range { font-size: 14px; font-weight: 500; color: var(--navy); }
+    .vote-share { font-size: 11px; color: var(--muted); }
+    .bar-track {
+      height: 7px;
+      background: #F0EAE0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── POLL AVERAGE VISUAL ── */
+    .avg-card {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .avg-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,101,10,0.15) 0%, transparent 70%);
+    }
+    .avg-title {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+    }
+    .seat-vis {
+      display: flex;
+      height: 36px;
+      border-radius: 8px;
+      overflow: hidden;
+      gap: 2px;
+      margin-bottom: 1rem;
+    }
+    .sv-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      transition: width 0.8s ease;
+    }
+    .majority-marker {
+      position: relative;
+      height: 24px;
+      margin-bottom: 0.75rem;
+    }
+    .mm-line {
+      position: absolute;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: rgba(255,255,255,0.3);
+    }
+    .mm-label {
+      position: absolute;
+      top: 0;
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+    .avg-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .al-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+    }
+    .al-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* ── CM PREFERENCE ── */
+    .cm-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .cm-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    .cm-rank {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--muted-light);
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .cm-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .cm-info { flex: 1; }
+    .cm-name { font-size: 14px; font-weight: 500; color: var(--text); }
+    .cm-party { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .cm-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: #F0EAE0;
+      border-radius: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    .cm-pct { font-size: 15px; font-weight: 500; min-width: 44px; text-align: right; }
+
+    /* ── ZONE SECTION ── */
+    .zone-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .zone-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .zone-card:hover { border-color: var(--saffron); }
+    .zone-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+    .zone-districts {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .zone-bar {
+      display: flex;
+      height: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+      gap: 2px;
+      margin-bottom: 8px;
+    }
+    .zone-seg { height: 100%; }
+    .zone-result {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .zone-winner { font-weight: 500; color: var(--dmk); }
+    .zone-seats { color: var(--muted); }
+    .zone-alert {
+      background: #FEF3E2;
+      border: 1px solid #F0C070;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #7A4A00;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── NEWS SECTION ── */
+    .news-list { }
+    .news-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .news-item:hover {
+      border-color: var(--saffron);
+      transform: translateX(3px);
+    }
+    .news-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #E4DDD4;
+      line-height: 1;
+      min-width: 28px;
+    }
+    .news-body { flex: 1; }
+    .news-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+      color: var(--saffron);
+      margin-bottom: 5px;
+    }
+    .news-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.45;
+      margin-bottom: 5px;
+    }
+    .news-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .news-arrow {
+      color: var(--muted-light);
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { }
+    .sidebar-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .sidebar-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      align-items: flex-start;
+    }
+    .tl-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .tl-date {
+      font-size: 11px;
+      color: var(--muted);
+      min-width: 60px;
+    }
+    .tl-event { font-size: 13px; color: var(--text); font-weight: 400; }
+    .tl-highlight { font-weight: 500; }
+
+    .alliance-block { margin-bottom: 1rem; }
+    .al-header {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .al-dot-sm { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+    .al-parties {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+      padding-left: 14px;
+    }
+
+    .resource-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .resource-link:last-child { border-bottom: none; }
+    .resource-link:hover .rl-title { color: var(--saffron); }
+    .rl-icon {
+      font-size: 18px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .rl-info { flex: 1; }
+    .rl-title { font-size: 13px; font-weight: 500; color: var(--text); transition: color 0.2s; }
+    .rl-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    .rl-arrow { color: var(--muted-light); font-size: 14px; }
+
+    .share-card {
+      background: linear-gradient(135deg, var(--navy) 0%, #1E3A5A 100%);
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .share-card::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: rgba(232,101,10,0.15);
+    }
+    .share-title { font-size: 14px; font-weight: 500; color: #fff; margin-bottom: 4px; }
+    .share-desc { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 1rem; line-height: 1.5; }
+    .share-buttons { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1; }
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .share-btn:hover { opacity: 0.85; }
+    .btn-whatsapp { background: #25D366; color: #fff; }
+    .btn-twitter { background: #1DA1F2; color: #fff; }
+    .btn-copy { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.15); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--navy);
+      padding: 2.5rem 1.5rem;
+      margin-top: 4rem;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .footer-brand .logo-mark { font-size: 1.5rem; }
+    .footer-tagline { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+    .footer-note { font-size: 11px; color: rgba(255,255,255,0.25); max-width: 380px; line-height: 1.6; }
+    .footer-updated { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 8px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .main { grid-template-columns: 1fr; }
+      .sidebar { order: -1; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+    }
+    @media (max-width: 600px) {
+      .header-nav { display: none; }
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .zone-grid { grid-template-columns: 1fr; }
+      .main { padding: 2rem 1.25rem; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .hero-countdown { gap: 8px; }
+      .cd-unit { padding: 10px 12px; min-width: 58px; }
+      .cd-num { font-size: 1.5rem; }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in:nth-child(1) { animation-delay: 0.05s; }
+    .fade-in:nth-child(2) { animation-delay: 0.12s; }
+    .fade-in:nth-child(3) { animation-delay: 0.19s; }
+    .fade-in:nth-child(4) { animation-delay: 0.26s; }
+    .fade-in:nth-child(5) { animation-delay: 0.33s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="flag-bar">
+    <span style="background:#FF9933;"></span>
+    <span style="background:#FFFFFF;"></span>
+    <span style="background:#138808;"></span>
+  </div>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">TN Vote 2026</span>
+      <span class="logo-sub">Election Tracker</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#polls" class="nav-link active">Polls</a>
+      <a href="#zones" class="nav-link">Zones</a>
+      <a href="#news" class="nav-link">News</a>
+      <a href="#results" class="nav-link">Results</a>
+    </nav>
+    <span class="live-chip"><span class="live-dot"></span>9 Days to Vote</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Tamil Nadu Assembly Election 2026</div>
+    <h1 class="hero-title">
+      <span class="tamil">தமிழ்நாடு</span> votes<br>in 9 days
+    </h1>
+    <p class="hero-desc">
+      The definitive tracker for Tamil Nadu's 234-seat assembly election.
+      Live polls, zone breakdowns, news and results — all in one place.
+    </p>
+    <div class="hero-countdown">
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-d">9</div>
+        <div class="cd-lbl">Days</div>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-h">--</div>
+        <div class="cd-lbl">Hours</div>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-m">--</div>
+        <div class="cd-lbl">Mins</div>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-s">--</div>
+        <div class="cd-lbl">Secs</div>
+      </div>
+    </div>
+    <div class="hero-dates">
+      <div class="date-badge">
+        <span class="date-dot" style="background:var(--saffron);"></span>
+        Polling day: <strong>April 23, 2026</strong>
+      </div>
+      <div class="date-badge">
+        <span class="date-dot" style="background:var(--green);"></span>
+        Results: <strong>May 4, 2026</strong>
+      </div>
+      <div class="date-badge">
+        <span class="date-dot" style="background:rgba(255,255,255,0.3);"></span>
+        Seats: <strong>234</strong> · Majority: <strong>118</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-n">234</div>
+      <span class="stat-accent"></span>
+      <div class="stat-l">Assembly Seats</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">5.67<span>Cr</span></div>
+      <span class="stat-accent"></span>
+      <div class="stat-l">Registered Voters</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">3</div>
+      <span class="stat-accent"></span>
+      <div class="stat-l">Major Alliances</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">118</div>
+      <span class="stat-accent"></span>
+      <div class="stat-l">Majority Mark</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- LEFT COLUMN -->
+  <div class="left-col">
+
+    <!-- POLL AVERAGE -->
+    <div id="polls">
+      <h2 class="section-title">Opinion poll tracker</h2>
+
+      <div class="avg-card fade-in">
+        <div class="avg-title">Poll average — projected seats (out of 234)</div>
+        <div class="seat-vis" id="seat-vis">
+          <div class="sv-seg" style="width:62%;background:#1A3D6B;border-radius:6px 0 0 6px;">DMK+ ~144</div>
+          <div class="sv-seg" style="width:2px;background:transparent;"></div>
+          <div class="sv-seg" style="width:28%;background:#B01020;">AIADMK+ ~65</div>
+          <div class="sv-seg" style="width:2px;background:transparent;"></div>
+          <div class="sv-seg" style="width:4%;background:#D4600A;">TVK</div>
+          <div class="sv-seg" style="width:2px;background:transparent;"></div>
+          <div class="sv-seg" style="width:6%;background:#556677;border-radius:0 6px 6px 0;">Oth</div>
+        </div>
+        <div class="majority-marker">
+          <div class="mm-line" style="left:50.4%;"></div>
+          <div class="mm-label" style="left:50.4%;top:8px;">← majority at 118</div>
+        </div>
+        <div class="avg-legend">
+          <div class="al-item"><div class="al-dot" style="background:#1A3D6B;"></div>DMK alliance</div>
+          <div class="al-item"><div class="al-dot" style="background:#B01020;"></div>AIADMK alliance</div>
+          <div class="al-item"><div class="al-dot" style="background:#D4600A;"></div>TVK (Vijay)</div>
+          <div class="al-item"><div class="al-dot" style="background:#556677;"></div>Others / NTK</div>
+        </div>
+      </div>
+
+      <!-- Poll cards -->
+      <div class="poll-card fade-in">
+        <div class="poll-header">
+          <div>
+            <div class="poll-name">Lok Poll</div>
+            <div class="poll-meta">117,000 respondents · 500 per constituency · April 1, 2026</div>
+          </div>
+          <span class="poll-tag tag-strong">DMK Landslide</span>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#1A3D6B;"></div>
+              <span class="party-name">DMK alliance</span>
+              <span class="party-extra">SPA</span>
+            </div>
+            <div class="pr-right">
+              <span class="seat-range">181–189</span>
+              <span class="vote-share">40.1%</span>
+            </div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:79%;background:#1A3D6B;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#B01020;"></div>
+              <span class="party-name">AIADMK alliance</span>
+              <span class="party-extra">NDA</span>
+            </div>
+            <div class="pr-right">
+              <span class="seat-range">38–42</span>
+              <span class="vote-share">29.0%</span>
+            </div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:17%;background:#B01020;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#D4600A;"></div>
+              <span class="party-name">TVK</span>
+              <span class="party-extra">Vijay · solo</span>
+            </div>
+            <div class="pr-right">
+              <span class="seat-range">8–10</span>
+              <span class="vote-share">23.9%</span>
+            </div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:4%;background:#D4600A;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#2D7A3A;"></div>
+              <span class="party-name">NTK</span>
+              <span class="party-extra">Seeman · solo</span>
+            </div>
+            <div class="pr-right">
+              <span class="seat-range">0</span>
+              <span class="vote-share">4.9%</span>
+            </div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:0%;background:#2D7A3A;"></div></div>
+        </div>
+      </div>
+
+      <div class="poll-card fade-in">
+        <div class="poll-header">
+          <div>
+            <div class="poll-name">Inside Elections</div>
+            <div class="poll-meta">163,800 respondents · March 2026</div>
+          </div>
+          <span class="poll-tag tag-strong">DMK Majority</span>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#1A3D6B;"></div>
+              <span class="party-name">DMK alliance</span>
+            </div>
+            <div class="pr-right">
+              <span class="seat-range">159–165</span>
+              <span class="vote-share">44%</span>
+            </div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:69%;background:#1A3D6B;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#B01020;"></div>
+              <span class="party-name">AIADMK alliance</span>
+            </div>
+            <div class="pr-right">
+              <span class="seat-range">64–70</span>
+              <span class="vote-share">33%</span>
+            </div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:29%;background:#B01020;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#D4600A;"></div>
+              <span class="party-name">TVK</span>
+            </div>
+            <div class="pr-right">
+              <span class="seat-range">4–6</span>
+              <span class="vote-share">18%</span>
+            </div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:2%;background:#D4600A;"></div></div>
+        </div>
+      </div>
+
+      <div class="poll-card fade-in">
+        <div class="poll-header">
+          <div>
+            <div class="poll-name">Vote Vibe <span style="font-size:11px;color:var(--muted);font-weight:400;">via News18</span></div>
+            <div class="poll-meta">March 2026</div>
+          </div>
+          <span class="poll-tag tag-mid">Close Race</span>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#1A3D6B;"></div>
+              <span class="party-name">DMK alliance</span>
+            </div>
+            <div class="pr-right"><span class="seat-range">113–123</span><span class="vote-share">39.9%</span></div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:50%;background:#1A3D6B;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#B01020;"></div>
+              <span class="party-name">AIADMK alliance</span>
+            </div>
+            <div class="pr-right"><span class="seat-range">106–116</span><span class="vote-share">37.5%</span></div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:47%;background:#B01020;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#D4600A;"></div>
+              <span class="party-name">TVK</span>
+            </div>
+            <div class="pr-right"><span class="seat-range">2–8</span><span class="vote-share">14.7%</span></div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:3%;background:#D4600A;"></div></div>
+        </div>
+      </div>
+
+      <div class="poll-card fade-in">
+        <div class="poll-header">
+          <div>
+            <div class="poll-name">Matrize</div>
+            <div class="poll-meta">April 6, 2026</div>
+          </div>
+          <span class="poll-tag tag-close">AIADMK Edge</span>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#1A3D6B;"></div>
+              <span class="party-name">DMK alliance</span>
+            </div>
+            <div class="pr-right"><span class="seat-range">102–115</span></div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:46%;background:#1A3D6B;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#B01020;"></div>
+              <span class="party-name">AIADMK alliance</span>
+            </div>
+            <div class="pr-right"><span class="seat-range">107–120</span></div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:50%;background:#B01020;"></div></div>
+        </div>
+        <div class="party-row">
+          <div class="pr-top">
+            <div class="pr-left">
+              <div class="party-dot" style="background:#D4600A;"></div>
+              <span class="party-name">TVK</span>
+            </div>
+            <div class="pr-right"><span class="seat-range">5–12</span></div>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:4%;background:#D4600A;"></div></div>
+        </div>
+      </div>
+
+      <!-- CM Preference -->
+      <h2 class="section-title" style="margin-top:2.5rem;">Most preferred Chief Minister</h2>
+      <div class="cm-card fade-in">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Source: Lok Poll · 117,000 sample</p>
+        <div class="cm-row">
+          <div class="cm-rank">1</div>
+          <div class="cm-avatar" style="background:#E8F0FA;color:#1A3D6B;">MS</div>
+          <div class="cm-info">
+            <div class="cm-name">M.K. Stalin</div>
+            <div class="cm-party">DMK · Incumbent Chief Minister</div>
+            <div class="cm-bar-wrap"><div style="width:41.1%;height:100%;background:#1A3D6B;border-radius:2px;"></div></div>
+          </div>
+          <div class="cm-pct" style="color:#1A3D6B;">41.1%</div>
+        </div>
+        <div class="cm-row">
+          <div class="cm-rank">2</div>
+          <div class="cm-avatar" style="background:#FEF0E6;color:#D4600A;">VJ</div>
+          <div class="cm-info">
+            <div class="cm-name">Vijay</div>
+            <div class="cm-party">TVK · Actor & party founder</div>
+            <div class="cm-bar-wrap"><div style="width:27.1%;height:100%;background:#D4600A;border-radius:2px;"></div></div>
+          </div>
+          <div class="cm-pct" style="color:#D4600A;">27.1%</div>
+        </div>
+        <div class="cm-row">
+          <div class="cm-rank">3</div>
+          <div class="cm-avatar" style="background:#FDE8EA;color:#B01020;">EP</div>
+          <div class="cm-info">
+            <div class="cm-name">Edappadi K. Palaniswami</div>
+            <div class="cm-party">AIADMK · Opposition leader</div>
+            <div class="cm-bar-wrap"><div style="width:24.1%;height:100%;background:#B01020;border-radius:2px;"></div></div>
+          </div>
+          <div class="cm-pct" style="color:#B01020;">24.1%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE SECTION -->
+    <div id="zones" style="margin-top:3rem;">
+      <h2 class="section-title">Zone-by-zone breakdown</h2>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;">Based on Lok Poll projections. Tamil Nadu divided into 4 electoral zones.</p>
+
+      <div class="zone-grid">
+        <div class="zone-card fade-in">
+          <div class="zone-name">North Zone</div>
+          <div class="zone-districts">Chennai · Kanchipuram · Chengalpattu · Tiruvallur · Vellore +5</div>
+          <div class="zone-bar">
+            <div class="zone-seg" style="width:73%;background:#1A3D6B;border-radius:4px 0 0 4px;"></div>
+            <div class="zone-seg" style="width:16%;background:#B01020;"></div>
+            <div class="zone-seg" style="width:4%;background:#D4600A;"></div>
+            <div class="zone-seg" style="width:7%;background:#AAA49C;border-radius:0 4px 4px 0;"></div>
+          </div>
+          <div class="zone-result">
+            <span class="zone-winner">DMK leads</span>
+            <span class="zone-seats">53–56 seats</span>
+          </div>
+        </div>
+
+        <div class="zone-card fade-in">
+          <div class="zone-name">Delta Zone</div>
+          <div class="zone-districts">Trichy · Thanjavur · Cuddalore · Nagapattinam · Mayiladuthurai +4</div>
+          <div class="zone-bar">
+            <div class="zone-seg" style="width:77%;background:#1A3D6B;border-radius:4px 0 0 4px;"></div>
+            <div class="zone-seg" style="width:19%;background:#B01020;"></div>
+            <div class="zone-seg" style="width:4%;background:#AAA49C;border-radius:0 4px 4px 0;"></div>
+          </div>
+          <div class="zone-result">
+            <span class="zone-winner">DMK leads</span>
+            <span class="zone-seats">39–40 seats</span>
+          </div>
+        </div>
+
+        <div class="zone-card fade-in">
+          <div class="zone-name">South Zone</div>
+          <div class="zone-districts">Madurai · Kanyakumari · Tirunelveli · Thoothukudi · Ramanathapuram +4</div>
+          <div class="zone-bar">
+            <div class="zone-seg" style="width:67%;background:#1A3D6B;border-radius:4px 0 0 4px;"></div>
+            <div class="zone-seg" style="width:15%;background:#B01020;"></div>
+            <div class="zone-seg" style="width:4%;background:#D4600A;"></div>
+            <div class="zone-seg" style="width:14%;background:#AAA49C;border-radius:0 4px 4px 0;"></div>
+          </div>
+          <div class="zone-result">
+            <span class="zone-winner">DMK leads</span>
+            <span class="zone-seats">45–47 seats</span>
+          </div>
+        </div>
+
+        <div class="zone-card fade-in">
+          <div class="zone-name">Kongu Zone ⚡</div>
+          <div class="zone-districts">Coimbatore · Salem · Erode · Namakkal · Tiruppur · Karur +4</div>
+          <div class="zone-bar">
+            <div class="zone-seg" style="width:61%;background:#1A3D6B;border-radius:4px 0 0 4px;"></div>
+            <div class="zone-seg" style="width:14%;background:#B01020;"></div>
+            <div class="zone-seg" style="width:4%;background:#D4600A;"></div>
+            <div class="zone-seg" style="width:21%;background:#AAA49C;border-radius:0 4px 4px 0;"></div>
+          </div>
+          <div class="zone-result">
+            <span class="zone-winner">DMK leads</span>
+            <span class="zone-seats">44–46 seats</span>
+          </div>
+          <div class="zone-alert">⚡ Biggest upset — AIADMK's traditional heartland now showing DMK surge. AIADMK projected to win only 9–10 seats here, down from 26 in 2021.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEWS SECTION -->
+    <div id="news" style="margin-top:3rem;">
+      <h2 class="section-title">Latest news</h2>
+      <div class="news-list">
+        <a class="news-item fade-in" href="https://www.theweek.in/news/india/2026/04/07/who-will-win-tamil-nadu-assembly-election-new-opinion-poll-comes-as-a-shocker-for-aiadmk.html" target="_blank" rel="noopener">
+          <div class="news-num">01</div>
+          <div class="news-body">
+            <div class="news-tag">Opinion Poll</div>
+            <div class="news-title">New Lok Poll predicts DMK landslide — a shock for AIADMK in Kongu heartland</div>
+            <div class="news-meta">The Week · April 7, 2026</div>
+          </div>
+          <div class="news-arrow">→</div>
+        </a>
+        <a class="news-item fade-in" href="https://www.indiatvnews.com/tamil-nadu/news-tamil-nadu-elections-opinion-polls-2026-live-updates-dmk-aiadmk-bjp-congress-mk-stalin-edappadi-k-palaniswami-2026-04-06-1036499" target="_blank" rel="noopener">
+          <div class="news-num">02</div>
+          <div class="news-body">
+            <div class="news-tag">Race Watch</div>
+            <div class="news-title">Matrize poll: Neck-and-neck contest — AIADMK alliance slightly edges DMK in latest survey</div>
+            <div class="news-meta">India TV News · April 6, 2026</div>
+          </div>
+          <div class="news-arrow">→</div>
+        </a>
+        <a class="news-item fade-in" href="https://openthemagazine.com/politics/tamil-nadu-assembly-elections-2026-the-leader-matters-not-the-candidate-says-ka-sengottaiyan" target="_blank" rel="noopener">
+          <div class="news-num">03</div>
+          <div class="news-body">
+            <div class="news-tag">Analysis</div>
+            <div class="news-title">"The leader matters, not the candidate" — Vijay wave predicted across Coimbatore and Kongu</div>
+            <div class="news-meta">Open Magazine · April 12, 2026</div>
+          </div>
+          <div class="news-arrow">→</div>
+        </a>
+        <a class="news-item fade-in" href="https://www.newsgram.com/tamil-nadu-election-2026/2026/04/07/inside-elections-survey-poll-suggests-victory-for-dmk" target="_blank" rel="noopener">
+          <div class="news-num">04</div>
+          <div class="news-body">
+            <div class="news-tag">Survey</div>
+            <div class="news-title">Inside Elections: DMK set for second term with 159–165 seats, TVK emerging as 3rd force</div>
+            <div class="news-meta">NewsGram · April 7, 2026</div>
+          </div>
+          <div class="news-arrow">→</div>
+        </a>
+        <a class="news-item fade-in" href="https://www.britannica.com/topic/2026-State-Elections-in-India" target="_blank" rel="noopener">
+          <div class="news-num">05</div>
+          <div class="news-body">
+            <div class="news-tag">Overview</div>
+            <div class="news-title">2026 State Elections in India: Tamil Nadu, Kerala, West Bengal explained in full</div>
+            <div class="news-meta">Britannica · April 10, 2026</div>
+          </div>
+          <div class="news-arrow">→</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- RESULTS SECTION -->
+    <div id="results" style="margin-top:3rem;">
+      <h2 class="section-title">Live result sources</h2>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
+          <div style="width:10px;height:10px;border-radius:50%;background:#2D7A3A;"></div>
+          <span style="font-size:13px;font-weight:500;color:var(--navy);">Counting begins: May 4, 2026 · 8:00 AM IST</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;">Results will stream in live from all 234 constituencies. Bookmark these official and trusted sources for real-time seat-by-seat updates.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <a class="news-item fade-in" href="https://results.eci.gov.in" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;">
+          <div style="font-size:22px;">🗳️</div>
+          <div class="news-body">
+            <div class="news-tag">Official</div>
+            <div class="news-title" style="font-size:13px;">ECI Results Portal</div>
+            <div class="news-meta">Real-time official results</div>
+          </div>
+        </a>
+        <a class="news-item fade-in" href="https://www.ndtv.com/elections" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;">
+          <div style="font-size:22px;">📺</div>
+          <div class="news-body">
+            <div class="news-tag">TV & Web</div>
+            <div class="news-title" style="font-size:13px;">NDTV Elections</div>
+            <div class="news-meta">Seat-by-seat live tracker</div>
+          </div>
+        </a>
+        <a class="news-item fade-in" href="https://en.wikipedia.org/wiki/2026_Tamil_Nadu_Legislative_Assembly_election" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;">
+          <div style="font-size:22px;">📖</div>
+          <div class="news-body">
+            <div class="news-tag">Reference</div>
+            <div class="news-title" style="font-size:13px;">Wikipedia</div>
+            <div class="news-meta">Live updated results table</div>
+          </div>
+        </a>
+        <a class="news-item fade-in" href="https://www.thehindu.com/elections/" target="_blank" rel="noopener" style="flex-direction:column;gap:8px;">
+          <div style="font-size:22px;">📰</div>
+          <div class="news-body">
+            <div class="news-tag">Print & Digital</div>
+            <div class="news-title" style="font-size:13px;">The Hindu</div>
+            <div class="news-meta">In-depth live coverage</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /left-col -->
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Share card -->
+    <div class="share-card">
+      <div class="share-title">Share this tracker</div>
+      <div class="share-desc">Help Tamil Nadu citizens and diaspora worldwide stay informed.</div>
+      <div class="share-buttons">
+        <a class="share-btn btn-whatsapp" href="https://wa.me/?text=Track%20the%20Tamil%20Nadu%20election%20live%20%F0%9F%97%B3%20Polls%2C%20zones%2C%20news%20and%20results%3A%20https%3A%2F%2Ftnvote2026.pages.dev" target="_blank">
+          <span>📲</span> Share on WhatsApp
+        </a>
+        <a class="share-btn btn-twitter" href="https://twitter.com/intent/tweet?text=Tracking%20the%20Tamil%20Nadu%202026%20election%20%E2%80%94%20polls%2C%20zones%20%26%20live%20results%20all%20in%20one%20place%20%23TNElections2026&url=https%3A%2F%2Ftnvote2026.pages.dev" target="_blank">
+          <span>🐦</span> Share on X / Twitter
+        </a>
+        <button class="share-btn btn-copy" id="copy-btn" onclick="copyLink()">
+          <span>🔗</span> Copy link
+        </button>
+      </div>
+    </div>
+
+    <!-- Key dates -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">Election timeline</div>
+      <div class="timeline-item">
+        <div class="tl-dot" style="background:#B01020;"></div>
+        <div>
+          <div class="tl-date">Mar 15</div>
+          <div class="tl-event">Election schedule announced by ECI</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-dot" style="background:#B01020;"></div>
+        <div>
+          <div class="tl-date">Mar 30</div>
+          <div class="tl-event">Nominations open</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-dot" style="background:#B01020;"></div>
+        <div>
+          <div class="tl-date">Apr 6</div>
+          <div class="tl-event">Nomination last date</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-dot" style="background:#B01020;"></div>
+        <div>
+          <div class="tl-date">Apr 9</div>
+          <div class="tl-event">Last date to withdraw candidacy</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-dot" style="background:var(--saffron);"></div>
+        <div>
+          <div class="tl-date">Apr 23</div>
+          <div class="tl-event tl-highlight" style="color:var(--saffron);">Polling day 🗳️</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-dot" style="background:var(--green);"></div>
+        <div>
+          <div class="tl-date">May 4</div>
+          <div class="tl-event tl-highlight" style="color:var(--green);">Counting & results 🎉</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alliance breakdown -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">Alliance breakdown</div>
+      <div class="alliance-block">
+        <div class="al-header">
+          <div class="al-dot-sm" style="background:#1A3D6B;"></div>
+          DMK-led alliance (SPA)
+        </div>
+        <div class="al-parties">DMK · INC · CPI(M) · CPI · VCK · MDMK · IUML · DMDK</div>
+      </div>
+      <div style="height:1px;background:var(--border);margin:10px 0;"></div>
+      <div class="alliance-block">
+        <div class="al-header">
+          <div class="al-dot-sm" style="background:#B01020;"></div>
+          AIADMK-led alliance (NDA)
+        </div>
+        <div class="al-parties">AIADMK · BJP · PMK · AMMK · TMMK · TMC(M)</div>
+      </div>
+      <div style="height:1px;background:var(--border);margin:10px 0;"></div>
+      <div class="alliance-block">
+        <div class="al-header">
+          <div class="al-dot-sm" style="background:#D4600A;"></div>
+          TVK — solo (234 seats)
+        </div>
+        <div class="al-parties">Tamilaga Vettri Kazhagam led by actor Vijay. Electoral debut — contesting all seats.</div>
+      </div>
+      <div style="height:1px;background:var(--border);margin:10px 0;"></div>
+      <div class="alliance-block">
+        <div class="al-header">
+          <div class="al-dot-sm" style="background:#2D7A3A;"></div>
+          NTK — solo (234 seats)
+        </div>
+        <div class="al-parties">Naam Tamilar Katchi led by Seeman. Tamil nationalist platform.</div>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">Official resources</div>
+      <a class="resource-link" href="https://www.tn.gov.in/election" target="_blank" rel="noopener">
+        <div class="rl-icon">🏛️</div>
+        <div class="rl-info">
+          <div class="rl-title">CEO Tamil Nadu</div>
+          <div class="rl-desc">Official election commission</div>
+        </div>
+        <div class="rl-arrow">↗</div>
+      </a>
+      <a class="resource-link" href="https://eci.gov.in" target="_blank" rel="noopener">
+        <div class="rl-icon">🗳️</div>
+        <div class="rl-info">
+          <div class="rl-title">Election Commission of India</div>
+          <div class="rl-desc">National body · candidate lists</div>
+        </div>
+        <div class="rl-arrow">↗</div>
+      </a>
+      <a class="resource-link" href="https://www.nvsp.in" target="_blank" rel="noopener">
+        <div class="rl-icon">📋</div>
+        <div class="rl-info">
+          <div class="rl-title">Voter Services Portal</div>
+          <div class="rl-desc">Check your name on rolls</div>
+        </div>
+        <div class="rl-arrow">↗</div>
+      </a>
+      <a class="resource-link" href="https://en.wikipedia.org/wiki/2026_Tamil_Nadu_Legislative_Assembly_election" target="_blank" rel="noopener">
+        <div class="rl-icon">📖</div>
+        <div class="rl-info">
+          <div class="rl-title">Wikipedia — Full Coverage</div>
+          <div class="rl-desc">Alliances · polls · history</div>
+        </div>
+        <div class="rl-arrow">↗</div>
+      </a>
+    </div>
+
+    <!-- 2021 context -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">2021 result — for context</div>
+      <div style="margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+          <span style="color:var(--text);font-weight:500;">DMK alliance</span>
+          <span style="color:#1A3D6B;font-weight:500;">159 seats</span>
+        </div>
+        <div style="height:8px;background:#F0EAE0;border-radius:4px;overflow:hidden;">
+          <div style="width:68%;height:100%;background:#1A3D6B;border-radius:4px;"></div>
+        </div>
+      </div>
+      <div style="margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+          <span style="color:var(--text);font-weight:500;">AIADMK alliance</span>
+          <span style="color:#B01020;font-weight:500;">66 seats</span>
+        </div>
+        <div style="height:8px;background:#F0EAE0;border-radius:4px;overflow:hidden;">
+          <div style="width:28%;height:100%;background:#B01020;border-radius:4px;"></div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;">Tamil Nadu has historically alternated between DMK and AIADMK every 5 years — 2026 may break this pattern.</p>
+    </div>
+
+  </aside>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-mark">TN Vote 2026</div>
+      <div style="height:3px;display:flex;width:120px;border-radius:2px;overflow:hidden;margin-top:8px;">
+        <div style="flex:1;background:#FF9933;"></div>
+        <div style="flex:1;background:rgba(255,255,255,0.3);"></div>
+        <div style="flex:1;background:#138808;"></div>
+      </div>
+      <div class="footer-tagline">Tamil Nadu Assembly Election 2026 Tracker</div>
+    </div>
+    <div>
+      <div class="footer-note">Poll data sourced from Lok Poll, Inside Elections, Vote Vibe (News18), and Matrize. This is an independent tracker — not affiliated with any political party, news organisation, or the Election Commission of India.</div>
+      <div class="footer-updated" id="footer-updated">Last updated: April 14, 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Countdown timer
+  function updateCountdown() {
+    const poll = new Date('2026-04-23T07:00:00+05:30');
+    const now = new Date();
+    const diff = poll - now;
+    if (diff <= 0) {
+      document.getElementById('cd-d').textContent = '0';
+      document.getElementById('cd-h').textContent = '0';
+      document.getElementById('cd-m').textContent = '0';
+      document.getElementById('cd-s').textContent = '0';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Smooth scroll + active nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        e.preventDefault();
+        document.querySelector(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  const sections = ['polls','zones','news','results'];
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+
+  // Copy link
+  function copyLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.innerHTML = '<span>✓</span> Copied!';
+      setTimeout(() => { btn.innerHTML = '<span>🔗</span> Copy link'; }, 2000);
+    });
+  }
+
+  // Animate bars on scroll
+  const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-fill, [style*="background:#1A3D6B"], [style*="background:#B01020"]').forEach(el => {
+          el.style.transition = 'width 1s cubic-bezier(0.4,0,0.2,1)';
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.poll-card').forEach(c => barObserver.observe(c));
+
+  // Update footer date
+  document.getElementById('footer-updated').textContent =
+    'Last updated: ' + new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+</script>
+
+</body>
+</html>
